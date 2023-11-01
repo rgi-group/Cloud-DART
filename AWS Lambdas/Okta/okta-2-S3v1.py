@@ -1,11 +1,11 @@
 #!/usr/local/bin/python3
 """okta-prod-logging.py: This script is to collect Okta logs for compliance"""
 __author__      = "Christopher Watkins"
-__copyright__   = "Copyright 2023, Postman"
+__copyright__   = "Copyright 2023,"
 __license__ = "Apache License, Version 2.0"
 __version__ = "1.0.0"
 __maintainer__ = "Christopher Watkins"
-__email__ = "christopher.watkins@postman.com"
+__email__ = "soc@rgigroup.org"
 __status__ = "Production"
 ##############################################
 import json
@@ -16,7 +16,7 @@ def lambda_handler(event, context):
     s3 = boto3.client('s3')
     
     # Define the S3 bucket name
-    bucket_name = 'postman-s3-okta-audit-logs'
+    bucket_name = 'rgi-s3-okta-audit-logs'
     
     # Convert the event object to a string
     event_str = json.dumps(event)
