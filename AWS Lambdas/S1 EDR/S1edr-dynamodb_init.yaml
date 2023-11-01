@@ -1,0 +1,68 @@
+Resources:
+  # DynamoDB Table
+  SentinelOneLastAlertTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: SentinelOne_Last_Alert
+      AttributeDefinitions:
+        - AttributeName: id
+          AttributeType: N
+      KeySchema:
+        - AttributeName: id
+          KeyType: HASH
+      ProvisionedThroughput:
+        ReadCapacityUnits: 1
+        WriteCapacityUnits: 1
+
+  # IAM Role for Lambda Function
+  LambdaExecutionRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - lambda.amazonaws.com
+            Action:
+              - sts:AssumeRole
+      Policies:
+        - PolicyName: DynamoDBWritePolicy
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - dynamodb:PutItem
+                Resource: !GetAtt [SentinelOneLastAlertTable, Arn]
+
+  # Lambda Function to Initialize DynamoDB Table
+  InitializeDynamoDBTableFunction:
+    Type: AWS::Lambda::Function
+    Properties:
+      Handler: index.handler
+      Role: !GetAtt [LambdaExecutionRole, Arn]
+      FunctionName: InitializeDynamoDBTable
+      Code:
+        ZipFile: |
+          import json
+          import boto3
+          import cfnresponse
+
+          def handler(event, context):
+              try:
+                  dynamodb = boto3.resource('dynamodb')
+                  table = dynamodb.Table('SentinelOne_Last_Alert')
+                  table.put_item(Item={'id': 1, 'last_alert_id': 0})
+                  cfnresponse.send(event, context, cfnresponse.SUCCESS, {})
+              except Exception as e:
+                  print(f"Failed to initialize DynamoDB: {e}")
+                  cfnresponse.send(event, context, cfnresponse.FAILED, {})
+      Runtime: python3.8
+
+  # Custom resource to trigger Lambda function
+  CustomResource:
+    Type: Custom::InitializeTable
+    Properties:
+      ServiceToken: !GetAtt InitializeDynamoDBTableFunction.Arn
