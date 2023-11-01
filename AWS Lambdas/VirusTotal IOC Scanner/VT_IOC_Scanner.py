@@ -61,10 +61,10 @@ def send_to_slack(report, ip_address, webhook_url):
 
 if __name__ == "__main__":
     # Your VirusTotal API key
-    api_key = "1f9a2e388e5d8c7c80026b000d0f2051f09cc99c129592d32ba331bba4f3a3dc"
+    api_key = "Your VirusTotal API Key"
     
     # Your Slack Webhook URL
-    webhook_url = "https://hooks.slack.com/services/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"
+    webhook_url = "Your Slack Webhook URL"
     
     # List of IP addresses to check
     ip_addresses = [
