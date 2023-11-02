@@ -77,8 +77,8 @@ SLAM (Security.Logging.Alert.Monitoring) is an enterprise-ready, API-first, even
 
 * **Okta logs**: Identity-related events.
 * **GitHub audit logs**: Repository changes and access.
-* **Postman App Logs**: Postman usage and behavior.
-* **Postman Cloudflare Logs**: Web traffic and security threats.
+* **RGI App Logs**: RGI usage and behavior.
+* **RGI Cloudflare Logs**: Web traffic and security threats.
 
 ***
 
@@ -90,7 +90,7 @@ SLAM (Security.Logging.Alert.Monitoring) is an enterprise-ready, API-first, even
 
 #### AWS Glue and Brex Substation Setup
 
-* Instructions on setting up AWS Glue for AWS and third-party logs, and Brex Substation for Postman logs.
+* Instructions on setting up AWS Glue for AWS and third-party logs, and Brex Substation for RGI logs.
 
 ***
 
@@ -114,7 +114,7 @@ SLAM (Security.Logging.Alert.Monitoring) is an enterprise-ready, API-first, even
 
 ### Contact
 
-* Your Contact Information
+* SOC@rgigroup.org
 
 ***
 
